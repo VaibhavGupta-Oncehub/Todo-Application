@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import moment from "moment";
 
 const CompleteStatus = () => {
   const [tasks, setTasks] = useState([]);
@@ -20,39 +21,52 @@ const CompleteStatus = () => {
         console.log("error ===> ", error);
       });
   };
-  
+
   useEffect(() => {
     getAllTasks();
   }, []);
 
   return (
     <div>
+      <div>
+        <h1 class="text-center">COMPLETED TASKS</h1>
+
+        <hr />
+      </div>
       {tasks.length &&
         tasks.map((task) => {
-            if(task.status==true){
-                return (
-                    <div className="row">
-                      <div className="card" style={{ width: "18rem" }}>
-                        <div className="card-body">
-                          <h5 className="card-title">{task.title}</h5>
-                          <h6 className="card-subtitle mb-2 text-muted">
-                            {task.body}{task.status}
-                          </h6>
-                          <p className="card-text">
-                            
-                          </p>
-                          <a href="#" className="card-link">
-                            Card link
-                          </a>
-                          <a href="#" className="card-link">
-                            Another link
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  );
-            }
+          if (task.status === true) {
+            return (
+              <div>
+                <div class="card text-center m-5">
+                  <h5 class="card-header">
+                    <b>Title: </b>
+                    {task.title}
+                  </h5>
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <b>Description: </b>
+                      {task.body}
+                    </h5>
+                    <p class="card-text">
+                      <b>Task Created on Date: </b>
+                      {moment(task.date).format("YYYY-MM-DD")}
+                    </p>
+                    <p class="card-text">
+                      <b>Task Status: </b>
+                      Marked Completed.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          }
         })}
+      <div className="text-center m-5">
+        <a href="/" class="btn btn-primary">
+          Go back
+        </a>
+      </div>
     </div>
   );
 };

@@ -21,7 +21,6 @@ const Card = (props) => {
   const [completedTask, setCompletedTask] = useState([]);
 
   const [isClicked, setIsClicked] = useState(false);
-  
 
   const editHandler = (id, title, body, date) => {
     setId(id);
@@ -48,25 +47,13 @@ const Card = (props) => {
       });
   };
 
-  
-
-  const handleStatus = (id, status)=>{
-    console.log(status);
-    // setStatus(!status);
-    console.log(status);
+  const handleStatus = (id, status) => {
     setIsClicked(true);
-
-    // if(isClicked){
-    //   completedTask = [...completedTask, task]
-
-    // }
-
-
     axios({
       method: "patch",
       url: "http://localhost:8000/" + id,
       data: {
-        status: !status 
+        status: !status,
       },
     })
       .then(function (response) {
@@ -78,140 +65,81 @@ const Card = (props) => {
       .catch((error) => {
         console.log("error ===> ", error);
       });
+  };
 
-    
-  }
-
-
-  // useEffect(()=>{
-  //   props.setDataSent(new Date());
-  // }, [status])
+  useEffect(()=>{
+    props.setDataSent(new Date());
+  }, [status])
 
   return (
     <div className="row">
       {props.tasks.map((task) => {
-
-        // task.status && setCompletedTask([...completedTask, task])
-
-        if(!task.status){
+        if (!task.status) {
           return (
-            <div className="col-sm-6" key={task._id}>
-            <div className="card">
-              <div className="card-body">
-                <h5 className="card-title">{task.title}</h5>
-                <div class="form-check">
-                  <label class="form-check-label" for="flexCheckDefault">
-                    Completed
-                  </label>
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    defaultValue={status}
-                    id="flexCheckDefault"
-                    onClick={()=>{handleStatus(task._id, task.status)}}
-                  />
+            <div className="col-sm-6 mb-3" key={task._id}>
+              <div className="card m-2">
+                <div className="card-body">
+                  <div>
+                    <h4 className="card-title text-center">
+                      {task.title}{" "}
+                      <span className="badge rounded-pill bg-warning text-dark">
+                        {task.date}
+                      </span>
+                    </h4>
+                  </div>
+                  <hr />
+                  <h5 className="card-text text-center mb-4">{task.body}</h5>
+                  <div class="form-check">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      <b>Completed ?</b>
+                    </label>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      defaultValue={status}
+                      id="flexCheckDefault"
+                      onClick={() => {
+                        handleStatus(task._id, task.status);
+                      }}
+                    />
+                  </div>
+                  <div class="btn-group m-2" role="group">
+                    <button
+                      className="btn btn-primary m-2"
+                      onClick={() => clickhandle(task._id)}
+                    >
+                      Delete Task
+                    </button>
+                    <button
+                      className="btn btn-primary m-2"
+                      variant="primary"
+                      onClick={() =>
+                        editHandler(task._id, task.title, task.body, task.date)
+                      }
+                    >
+                      Edit Task
+                    </button>
+                  </div>
                 </div>
-                <span className="badge rounded-pill bg-warning text-dark">
-                  {task.date}
-                </span>
-                <p className="card-text">{task.body}</p>
-                <button
-                  className="btn btn-primary"
-                  onClick={() => clickhandle(task._id)}
-                >
-                  Delete Task
-                </button>
-                <br />
-                <br />
-                <button
-                  className="btn btn-primary"
-                  variant="primary"
-                  onClick={() =>
-                    editHandler(task._id, task.title, task.body, task.date)
-                  }
-                >
-                  Edit Task
-                </button>
               </div>
+              {showModal && (
+                <EditTaskModal
+                  show={show}
+                  handleClose={handleClose}
+                  id={id}
+                  title={title}
+                  setTitle={setTitle}
+                  body={body}
+                  setBody={setBody}
+                  currentDate={taskdate}
+                  setTaskDate={setTaskDate}
+                  setDataSent={props.setDataSent}
+                  setShowModal={setShowModal}
+                />
+              )}
             </div>
-            {showModal && (
-              <EditTaskModal
-                show={show}
-                handleClose={handleClose}
-                id={id}
-                title={title}
-                setTitle={setTitle}
-                body={body}
-                setBody={setBody}
-                currentDate={taskdate}
-                setTaskDate={setTaskDate}
-                setDataSent={props.setDataSent}
-                setShowModal={setShowModal}
-              />
-            )}
-          </div>
-
           );
         }
-        // return (
-            // <div className="col-sm-6" key={task._id}>
-            //   <div className="card">
-            //     <div className="card-body">
-            //       <h5 className="card-title">{task.title}</h5>
-            //       <div class="form-check">
-            //         <label class="form-check-label" for="flexCheckDefault">
-            //           Completed
-            //         </label>
-            //         <input
-            //           class="form-check-input"
-            //           type="checkbox"
-            //           defaultValue={status}
-            //           id="flexCheckDefault"
-            //           onClick={()=>{handleStatus(task._id, task.status)}}
-            //         />
-            //       </div>
-            //       <span className="badge rounded-pill bg-warning text-dark">
-            //         {task.date}
-            //       </span>
-            //       <p className="card-text">{task.body}</p>
-            //       <button
-            //         className="btn btn-primary"
-            //         onClick={() => clickhandle(task._id)}
-            //       >
-            //         Delete Task
-            //       </button>
-            //       <br />
-            //       <br />
-            //       <button
-            //         className="btn btn-primary"
-            //         variant="primary"
-            //         onClick={() =>
-            //           editHandler(task._id, task.title, task.body, task.date)
-            //         }
-            //       >
-            //         Edit Task
-            //       </button>
-            //     </div>
-            //   </div>
-            //   {showModal && (
-            //     <EditTaskModal
-            //       show={show}
-            //       handleClose={handleClose}
-            //       id={id}
-            //       title={title}
-            //       setTitle={setTitle}
-            //       body={body}
-            //       setBody={setBody}
-            //       currentDate={taskdate}
-            //       setTaskDate={setTaskDate}
-            //       setDataSent={props.setDataSent}
-            //       setShowModal={setShowModal}
-            //     />
-            //   )}
-            // </div>
-          
-        
-        // );
       })}
     </div>
   );

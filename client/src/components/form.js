@@ -20,51 +20,58 @@ const Form = (props) => {
     e.preventDefault();
     console.log("in the form.js");
     props.onChangeFormHandler(title, body, date);
+    setTitle("");
+    setBody("");
+    setDate("");
   };
 
   return (
-    <div className="new-expense">
-      <form onSubmit={formHandler}>
-        <div className="new-expense__controls">
-          <div className="new-expense__control">
-            <label>Title</label>
-            <input
-              type="text"
-              value={title}
-              onChange={titleChangeHandler}
-            ></input>
+    <div>
+      <h1>Create Your Task</h1>
+      <div className="new-expense">
+        <form onSubmit={formHandler}>
+          <div className="new-expense__controls">
+            <div className="new-expense__control">
+              <label>Title</label>
+              <input
+                type="text"
+                value={title}
+                onChange={titleChangeHandler}
+              ></input>
+            </div>
+            <div className="new-expense__control">
+              <label>Body</label>
+              <input
+                type="text"
+                value={body}
+                min="0.01"
+                step="0.01"
+                onChange={bodyChangeHandler}
+              ></input>
+            </div>
+            <div className="new-expense__control">
+              <label>Date</label>
+              <input
+                type="date"
+                min={moment(new Date()).format("YYYY-MM-DD")}
+                value={moment(date).format("YYYY-MM-DD")}
+                onChange={dateChangeHandler}
+                required
+              ></input>
+            </div>
           </div>
-          <div className="new-expense__control">
-            <label>Body</label>
-            <input
-              type="text"
-              min="0.01"
-              step="0.01"
-              onChange={bodyChangeHandler}
-            ></input>
+          <div className="new-expense__actions">
+            <button
+              onClick={() => {
+                props.setShowForm(!props.showForm);
+              }}
+            >
+              cancel
+            </button>
+            <button type="submit">Submit</button>
           </div>
-          <div className="new-expense__control">
-            <label>Date</label>
-            <input
-              type="date"
-              min={moment(new Date()).format('YYYY-MM-DD')}
-              defaultValue={date}
-              onChange={dateChangeHandler}
-              required
-            ></input>
-          </div>
-        </div>
-        <div className="new-expense__actions">
-          <button
-            onClick={() => {
-              props.setShowForm(!props.showForm);
-            }}
-          >
-            cancel
-          </button>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 };

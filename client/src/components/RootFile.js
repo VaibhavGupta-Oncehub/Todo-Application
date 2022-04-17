@@ -3,11 +3,7 @@ import Form from "./form"
 import Card from "./Card"
 import axios from "axios";
 import {
-    Routes,
-    Route,
-    Link,
-    useNavigate,
-    useLocation,
+  useNavigate
   } from "react-router-dom";
   
 const RootFile = (props) => {
@@ -70,15 +66,32 @@ const RootFile = (props) => {
   
 
   return (
-    <div className="container ">
-      <div className="new-expense">
-        {showForm ? addTasks : <button onClick={showNewTask}>Add Tasks</button>}
+    <div>
+      <h1 className="m-5 text-center">ToDo Application 📝</h1>
+      <div className="container ">
+        <div className="new-expense">
+          {showForm ? (
+            addTasks
+          ) : (
+            <button onClick={showNewTask}>Add Tasks</button>
+          )}
+        </div>
+        <h1 className="m-5 text-center">Current Tasks 🏃</h1>
+        <div className="expenses">
+          {task?.length && <Card tasks={task} setDataSent={setDataSent}></Card>}
+        </div>
+        <div className="text-center">
+          <button
+            className="btn btn-primary btn-lg m-2"
+            type="submit "
+            onClick={() => {
+              navigate("/completed");
+            }}
+          >
+            Show me Completed Task
+          </button>
+        </div>
       </div>
-      <div className="expenses">
-        {task?.length && <Card tasks={task} setDataSent={setDataSent}></Card>}
-      </div>
-      <button type="submit" onClick={()=>{
-        navigate("/completed")}}>Show me something</button>
     </div>
   );
 };
