@@ -16,6 +16,7 @@ const CompleteStatus = () => {
       .then(function (response) {
         console.log("response==>", response);
         setTasks(response?.data?.message);
+        setDataSent(new Date())
       })
       .catch((error) => {
         console.log("error ===> ", error);
@@ -24,7 +25,21 @@ const CompleteStatus = () => {
 
   useEffect(() => {
     getAllTasks();
-  }, []);
+  }, [dataSent]);
+
+    const clickhandle = (id) => {
+      axios({
+        method: "delete",
+        url: "http://localhost:8000/" + id,
+      })
+        .then(function (response) {
+          console.log("response==>", response);
+          setDataSent(new Date());
+        })
+        .catch((error) => {
+          console.log("error ===> ", error);
+        });
+    };
 
   return (
     <div>
@@ -56,6 +71,12 @@ const CompleteStatus = () => {
                       <b>Task Status: </b>
                       Marked Completed.
                     </p>
+                    <button
+                      className="btn btn-primary m-2"
+                      onClick={() => clickhandle(task._id)}
+                    >
+                      Delete Task
+                    </button>
                   </div>
                 </div>
               </div>
