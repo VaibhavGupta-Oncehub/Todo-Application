@@ -13,7 +13,7 @@ const Form = (props) => {
     setBody(e.target.value);
   };
   const dateChangeHandler = (e) => {
-    setDate(e.target.value);
+    setDate(moment(e.target.value).format('YYYY-MM-DD'));
   };
 
   const formHandler = (e) => {
@@ -53,8 +53,8 @@ const Form = (props) => {
               <label>Date</label>
               <input
                 type="date"
-                min={moment(new Date()).format("YYYY-MM-DD")}
-                value={moment(date).format("YYYY-MM-DD")}
+                value={date}
+                min={moment(new Date()).format("DD-MM-YYYY")}
                 onChange={dateChangeHandler}
                 required
               ></input>
@@ -68,7 +68,9 @@ const Form = (props) => {
             >
               cancel
             </button>
-            <button type="submit">Submit</button>
+            <button type="submit">
+              Submit
+            </button>
           </div>
         </form>
       </div>

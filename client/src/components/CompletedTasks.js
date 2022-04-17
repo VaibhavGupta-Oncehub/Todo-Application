@@ -5,7 +5,7 @@ import moment from "moment";
 
 const CompleteStatus = () => {
   const [tasks, setTasks] = useState([]);
-  const [dataSent, setDataSent] = useState("");
+
   let navigate = useNavigate();
 
   const getAllTasks = () => {
@@ -16,7 +16,6 @@ const CompleteStatus = () => {
       .then(function (response) {
         console.log("response==>", response);
         setTasks(response?.data?.message);
-        setDataSent(new Date())
       })
       .catch((error) => {
         console.log("error ===> ", error);
@@ -25,21 +24,22 @@ const CompleteStatus = () => {
 
   useEffect(() => {
     getAllTasks();
-  }, [dataSent]);
+  },[]);
 
-    const clickhandle = (id) => {
-      axios({
-        method: "delete",
-        url: "http://localhost:8000/" + id,
+  const clickhandle = (id) => {
+    axios({
+      method: "delete",
+      url: "http://localhost:8000/" + id,
+    })
+      .then(function (response) {
+        console.log("response==>", response);
       })
-        .then(function (response) {
-          console.log("response==>", response);
-          setDataSent(new Date());
-        })
-        .catch((error) => {
-          console.log("error ===> ", error);
-        });
-    };
+      .catch((error) => {
+        console.log("error ===> ", error);
+      }).finally(
+        getAllTasks()
+      )
+  };
 
   return (
     <div>
@@ -72,6 +72,7 @@ const CompleteStatus = () => {
                       Marked Completed.
                     </p>
                     <button
+                      name="delete"
                       className="btn btn-primary m-2"
                       onClick={() => clickhandle(task._id)}
                     >

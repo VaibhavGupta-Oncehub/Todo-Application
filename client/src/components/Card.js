@@ -18,8 +18,6 @@ const Card = (props) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [taskdate, setTaskDate] = useState("");
-  const [completedTask, setCompletedTask] = useState([]);
-
   const [isClicked, setIsClicked] = useState(false);
 
   const editHandler = (id, title, body, date) => {
@@ -67,9 +65,9 @@ const Card = (props) => {
       });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     props.setDataSent(new Date());
-  }, [status])
+  }, [status]);
 
   return (
     <div className="row">
@@ -89,12 +87,12 @@ const Card = (props) => {
                   </div>
                   <hr />
                   <h5 className="card-text text-center mb-4">{task.body}</h5>
-                  <div class="form-check">
-                    <label class="form-check-label" for="flexCheckDefault">
+                  <div className="form-check">
+                    <label className="form-check-label" htmlFor="flexCheckDefault">
                       <b>Completed ?</b>
                     </label>
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="checkbox"
                       defaultValue={status}
                       id="flexCheckDefault"
@@ -103,7 +101,7 @@ const Card = (props) => {
                       }}
                     />
                   </div>
-                  <div class="btn-group m-2" role="group">
+                  <div className="btn-group m-2" role="group">
                     <button
                       className="btn btn-primary m-2"
                       onClick={() => clickhandle(task._id)}
