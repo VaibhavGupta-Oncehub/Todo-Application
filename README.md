@@ -55,6 +55,6 @@ This todo application can create basic ToDo tasks according to dates. User can v
  1. Clone the TODO repository 
  2. Open the Project in any IDE.
  3. In the server directory, open the index.js file. Now paste your MongoDB client Link in the _const url _ on line 4. This Link contains the credentials for your mongoDB database when you have created a MongoDB cluster.
- 4. Open the terminal and go in the server directory then run **node index.js** command. If everything is working, you would be successfully connected to your mongoDb cluster.
+ 4. Open the terminal and go to the server directory then run **node index.js** command. If everything is working, you would be successfully connected to your mongoDb cluster.
  5. Now go to the client directory and run **npm i** and **npm start ** to install node modules and run the todo application in the 3000 port of your localhost.
  
