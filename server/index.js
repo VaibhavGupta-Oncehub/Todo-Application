@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoClient = require("mongodb").MongoClient;
 const mongodb = require("mongodb");
-const url = "mongodb+srv://adarsh:warning@cluster0.6zuqm.mongodb.net/ritik";
+const url =
+  "mongodb+srv://Vaibhav-Test:3LbLGvkcJEjcG5Li@cluster0.m2she.mongodb.net/test";
 
 const app = express();
 const cors = require("cors");
@@ -62,6 +63,7 @@ app.post("/", (request, response) => {
     );
   });
 });
+
 app.delete("/:id", (request, response) => {
   mongoClient.connect(url, (err, client) => {
     const db = client.db("TodoTasks");
@@ -125,6 +127,5 @@ app.patch("/:id", (request, response) => {
       });
   });
 });
-
 
 app.listen(8000);

@@ -40,7 +40,7 @@ const Form = (props) => {
               ></input>
             </div>
             <div className="new-expense__control">
-              <label>Body</label>
+              <label>Description</label>
               <input
                 type="text"
                 value={body}

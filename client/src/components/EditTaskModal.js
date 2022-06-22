@@ -1,11 +1,9 @@
 import { Modal, Button } from "react-bootstrap";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-// import moment from "moment";
+import moment from "moment";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-
 
 const EditTaskModal = ({
   show,
@@ -20,17 +18,8 @@ const EditTaskModal = ({
   setDataSent,
   setShowModal
 }) => {
-  console.log(
-    "Current Title = " +
-      title +
-      " Current Body= " +
-      body +
-      " Current Date= " +
-      currentDate
-  );
-
   const changeDate = (e) => {
-    // setTaskDate(moment(e).format("YYYY-MM-DD"));
+    setTaskDate(moment(e).format("YYYY-MM-DD"));
   };
   let navigate = useNavigate();
 

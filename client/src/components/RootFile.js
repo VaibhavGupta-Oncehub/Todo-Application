@@ -1,52 +1,48 @@
 import { useEffect, useState } from "react";
-import Form from "./form"
-import Card from "./Card"
+import Form from "./form";
+import Card from "./Card";
 import axios from "axios";
-import {
-  useNavigate
-  } from "react-router-dom";
-  
+import { useNavigate } from "react-router-dom";
+
 const RootFile = (props) => {
-    let navigate = useNavigate();
+  let navigate = useNavigate();
 
   const [task, setTasks] = useState([]);
   const [dataSent, setDataSent] = useState("");
   const [showForm, setShowForm] = useState(false);
 
-  const getAllTasks=()=>{
+  const getAllTasks = () => {
     axios({
       method: "get",
       url: "http://localhost:8000/",
     })
       .then(function (response) {
-          console.log("response==>",response)
-          setTasks(response?.data?.message)
-          navigate('/')
-      }).catch((error)=>{
-          console.log("error ===> ",error)
-      }) 
-
-      
-  }
-
-  const formDataHandler =async (title, body, date) => {
-  const formData={title: title,body: body,date: date}
-  console.log("Sending post request with this data ===>",formData)
-    axios({
-        method: "post",
-        url: "http://localhost:8000/",
-        data: {
-         formData
-        },
+        setTasks(response?.data?.message);
+        navigate("/");
       })
-        .then(function (response) {
-            console.log("response==>",response)
-            setDataSent(new Date())
-            navigate('/')
-        }).catch((error)=>{
-            console.log("error ===> ",error)
-        })
+      .catch((error) => {
+        console.log("error ===> ", error.message);
+      });
+  };
 
+  const formDataHandler = async (title, body, date) => {
+    const formData = { title: title, body: body, date: date };
+    console.log("Sending post request with this data ===>", formData);
+    axios({
+      method: "post",
+      url: "http://localhost:8000/",
+      data: {
+        formData,
+      },
+    })
+      .then(function (response) {
+        console.log("response==>", response);
+        setDataSent(new Date());
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log("error ===> ", error);
+      });
   };
   const showNewTask = () => {
     setShowForm(!showForm);
@@ -59,11 +55,9 @@ const RootFile = (props) => {
     ></Form>
   );
 
-  useEffect(()=>{
-    getAllTasks()
-  },[dataSent])
-
-  
+  useEffect(() => {
+    getAllTasks();
+  }, [dataSent]);
 
   return (
     <div>

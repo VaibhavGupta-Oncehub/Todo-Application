@@ -1,12 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import moment from "moment";
 
 const CompleteStatus = () => {
   const [tasks, setTasks] = useState([]);
-
-  let navigate = useNavigate();
 
   const getAllTasks = () => {
     axios({
@@ -14,7 +11,6 @@ const CompleteStatus = () => {
       url: "http://localhost:8000/",
     })
       .then(function (response) {
-        console.log("response==>", response);
         setTasks(response?.data?.message);
       })
       .catch((error) => {
@@ -24,7 +20,7 @@ const CompleteStatus = () => {
 
   useEffect(() => {
     getAllTasks();
-  },[]);
+  }, []);
 
   const clickhandle = (id) => {
     axios({
@@ -36,15 +32,14 @@ const CompleteStatus = () => {
       })
       .catch((error) => {
         console.log("error ===> ", error);
-      }).finally(
-        getAllTasks()
-      )
+      })
+      .finally(getAllTasks());
   };
 
   return (
     <div>
       <div>
-        <h1 class="text-center">COMPLETED TASKS</h1>
+        <h1 className="text-center">COMPLETED TASKS</h1>
 
         <hr />
       </div>
@@ -52,22 +47,22 @@ const CompleteStatus = () => {
         tasks.map((task) => {
           if (task.status === true) {
             return (
-              <div>
-                <div class="card text-center m-5">
-                  <h5 class="card-header">
+              <div key={task._id}>
+                <div className="card text-center m-5">
+                  <h5 className="card-header">
                     <b>Title: </b>
                     {task.title}
                   </h5>
-                  <div class="card-body">
-                    <h5 class="card-title">
+                  <div className="card-body">
+                    <h5 className="card-title">
                       <b>Description: </b>
                       {task.body}
                     </h5>
-                    <p class="card-text">
+                    <p className="card-text">
                       <b>Task Created on Date: </b>
                       {moment(task.date).format("YYYY-MM-DD")}
                     </p>
-                    <p class="card-text">
+                    <p className="card-text">
                       <b>Task Status: </b>
                       Marked Completed.
                     </p>
@@ -85,7 +80,7 @@ const CompleteStatus = () => {
           }
         })}
       <div className="text-center m-5">
-        <a href="/" class="btn btn-primary">
+        <a href="/" className="btn btn-primary">
           Go back
         </a>
       </div>
